@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<link rel="manifest" href="manifest.json">
+<head>
+    <title>Text Adventure</title>
+    <link rel="stylesheet" href="mainmenu.css">
+</head>
+<body>
+<!-- TODO: fix aspect ratios  -->
+<div id="main-menu-container">
+    <img id="main-menu-background" src="assets/main_menu_background.png" alt="Main Menu Background">
+    <div id="main-menu-text"></div>
+</div>
+<div id="game-container">
+    <img id="background" src="assets/background.img.png" alt="Background">
+    <img id="horizontal-plane" src="assets/horizontal.plane.png" alt="Horizontal Plane">
+    <img id="player" src="assets/character/player.png" alt="Player">
+</div>
+<div id="text-output"></div>
+<audio id="main-menu-audio" loop>
+    <source src="assets/main_menu_music.mp4" type="audio/mpeg">
+    Your browser does not support the audio element.
+</audio>
+<script src="txtadvent.js"></script>
+</body>
+</html>
