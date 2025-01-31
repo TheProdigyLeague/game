@@ -35,9 +35,19 @@ body {
     position: absolute;
     bottom: 0; /* Align to the bottom */
     left: 0; /* Align to the left */
-    width: 100px; /* Adjust player size as needed */
+    width: 50px; /* Adjust player size as needed */
     height: auto; /* Maintain aspect ratio */
     z-index: 2; /* Above the plane */
+}
+
+#merchant {
+    position: absolute;
+    top: 250px;
+    bottom: 0; /* Align to the bottom */
+    right: 0; /* Align to the right */
+    width: 100px; /* Adjust merchant size as needed */
+    height: auto; /* Maintain aspect ratio */
+    z-index: 1;
 }
 
 #text-output {
@@ -60,7 +70,7 @@ body {
         #main-menu-background {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: fill;
             position: absolute;
             top: 0;
             left: 0;
@@ -70,7 +80,7 @@ body {
         #main-menu-text {
             position: relative;
             z-index: 1; /* Above the background */
-            color: white; /* Adjust text color as needed */
+            color: #eec9ae; /* Adjust text color as needed */
             font-size: 24px; /* Adjust font size as needed */
             font-family: "Courier New", monospace; /* Adjust font as needed */
             padding-top: 100px; /* Adjust padding as needed */

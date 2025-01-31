@@ -1,3 +1,6 @@
+~/AndroidStudioProjects/game$ git init
+## workflows
+
 ## `index.html`: The main HTML file to display the game.
    *   `style.css`: For basic styling (optional for now).
    *   `script.js`: The main JavaScript file containing the game logic.
@@ -24,4 +27,12 @@
 # Console-Based Loading: The game will load assets and display information in the browser's console (for now).
 # JavaScript: The entire game will be built using JavaScript.
 
+### CI/CD
 
+# Add more game elements (Merchant Sim).
+# Improve movement (Walk animation).
+# Mechanics: > Trade dialog box
+# Merchant image, dialog box image
+# Refactor struct for .gitignore
+# Debug when scripts break mainmenu game
+# Add merchant text
