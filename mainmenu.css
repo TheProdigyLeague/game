@@ -61,7 +61,7 @@ body {
 #main-menu-container {
             position: relative; /* Important for layering */
             width: 800px; /* Adjust as needed */
-            height: 400px; /* Adjust as needed */
+            height: 825px; /* Adjust as needed */
             margin: 20px auto;
             text-align: center; /* Center the text */
             display: block; /* Show the main menu initially */
