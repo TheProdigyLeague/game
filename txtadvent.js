@@ -7,6 +7,7 @@ let gameState = {
     merchantX: 660,
     merchantMessageShown: false,
     playerGold: 0,
+    isShopOpen: false, // New state to track if the shop is open
 };
 
 /** DOM Elements
@@ -60,6 +61,7 @@ function loadAssets() {
     console.log("Loading character/assets/player.png...");
     console.log("Loading horizontal.plane.png...");
     console.log("Loading merchant.png...");
+    console.log("Loading gold.coin.png...")
 }
 
 // Show Game Scene
@@ -114,12 +116,18 @@ function handleMovementInput(event) {
         // merchant UI
         if (newPlayerX + playerWidth >= gameState.merchantX && !gameState.merchantMessageShown) {
             // Player is near the merchant and the message hasn't been shown yet
-            textOutput.innerHTML = "<p>Shop at this merchant.</p>";
+            textOutput.innerHTML = "<p id='shop-option'>Shop at this merchant.</p>";
             gameState.merchantMessageShown = true; // Set the flag to true
+            document.getElementById("shop-option").addEventListener("click", openShop); // Add event listener to the shop option
         } else if (newPlayerX + playerWidth < gameState.merchantX && gameState.merchantMessageShown) {
             // Player has moved away from the merchant
             textOutput.innerHTML = "<p>You are at the beginning of your journey.</p>";
             gameState.merchantMessageShown = false; // Reset the flag
+            // Remove the event listener when the player moves away
+            const shopOption = document.getElementById("shop-option");
+            if (shopOption) {
+                shopOption.removeEventListener("click", openShop);
+            }
         }
 
         // Update the player's position only if it has changed
@@ -128,6 +136,34 @@ function handleMovementInput(event) {
             player.style.left = gameState.playerX + "px";
         }
     }
+}
+
+// Open Shop
+function openShop() {
+    if (!gameState.isShopOpen) {
+        gameState.isShopOpen = true;
+        showShopMenu();
+    }
+}
+
+// Show Shop Menu
+function showShopMenu() {
+    textOutput.innerHTML = `
+        <p>Merchant's Wares:</p>
+        <p>1. Dagger - 5g</p>
+        <p>2. Potion - 10g</p>
+        <p>3. Map - 20g</p>
+        <p id="close-shop-option"> > Close Shop</p>
+    `;
+    // Add event listener to close the shop
+    document.getElementById("close-shop-option").addEventListener("click", closeShop);
+}
+
+// Close Shop
+function closeShop() {
+    gameState.isShopOpen = false;
+    textOutput.innerHTML = "<p id='shop-option'>Shop at this merchant.</p>";
+    document.getElementById("shop-option").addEventListener("click", openShop);
 }
 
 // Initialize the game
