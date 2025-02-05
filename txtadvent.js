@@ -7,7 +7,6 @@ let gameState = {
     merchantX: 660,
     merchantMessageShown: false,
     playerGold: 0,
-    isShopOpen: false, // New state to track if the shop is open
 };
 
 /** DOM Elements
@@ -61,7 +60,6 @@ function loadAssets() {
     console.log("Loading character/assets/player.png...");
     console.log("Loading horizontal.plane.png...");
     console.log("Loading merchant.png...");
-    console.log("Loading gold.coin.png...")
 }
 
 // Show Game Scene
@@ -116,18 +114,12 @@ function handleMovementInput(event) {
         // merchant UI
         if (newPlayerX + playerWidth >= gameState.merchantX && !gameState.merchantMessageShown) {
             // Player is near the merchant and the message hasn't been shown yet
-            textOutput.innerHTML = "<p id='shop-option'>Shop at this merchant.</p>";
+            textOutput.innerHTML = "<p>Shop at this merchant.</p>";
             gameState.merchantMessageShown = true; // Set the flag to true
-            document.getElementById("shop-option").addEventListener("click", openShop); // Add event listener to the shop option
         } else if (newPlayerX + playerWidth < gameState.merchantX && gameState.merchantMessageShown) {
             // Player has moved away from the merchant
             textOutput.innerHTML = "<p>You are at the beginning of your journey.</p>";
             gameState.merchantMessageShown = false; // Reset the flag
-            // Remove the event listener when the player moves away
-            const shopOption = document.getElementById("shop-option");
-            if (shopOption) {
-                shopOption.removeEventListener("click", openShop);
-            }
         }
 
         // Update the player's position only if it has changed
@@ -136,69 +128,6 @@ function handleMovementInput(event) {
             player.style.left = gameState.playerX + "px";
         }
     }
-}
-
-// Open Shop
-function openShop() {
-    if (!gameState.isShopOpen) {
-        gameState.isShopOpen = true;
-        showShopMenu();
-    }
-}
-
-// Show Shop Menu
-function showShopMenu() {
-    textOutput.innerHTML = `
-        <p>Merchant's Wares:</p>
-        <p>Your Gold: <span id="player-gold">${gameState.playerGold}g</span><img id="gold-icon" src="assets/gold.coin.png" alt="Gold Icon"></p>
-        <p class="shop-item" data-item="dagger" data-cost="5">1. Dagger - 5g</p>
-        <p class="shop-item" data-item="potion" data-cost="10">2. Potion - 10g</p>
-        <p class="shop-item" data-item="map" data-cost="20">3. Map - 20g</p>
-        <p id="close-shop-option"> > Close Shop</p>
-    `;
-
-    // Add event listener to close the shop
-    document.getElementById("close-shop-option").addEventListener("click", closeShop);
-
-    // Add event listeners to shop items
-    const shopItems = document.querySelectorAll(".shop-item");
-    shopItems.forEach(item => {
-        item.addEventListener("click", handleItemClick);
-    });
-    // Gold.ico
-    const goldIcon = document.getElementById("gold-icon");
-    goldIcon.style.width = "15px"; // Adjust size as needed
-    goldIcon.style.height = "20px"; // Adjust size as needed
-    goldIcon.style.verticalAlign = "middle"; // Align with the text
-    goldIcon.style.marginLeft = "5px"; // Add some space between the text and the icon
-}
-// Handle Item Click
-function handleItemClick(event) {
-    const item = event.currentTarget.dataset.item;
-    const cost = parseInt(event.currentTarget.dataset.cost);
-
-    if (gameState.playerGold >= cost) {
-        // Player can afford the item
-        gameState.playerGold -= cost;
-        document.getElementById("player-gold").textContent = `${gameState.playerGold}g`; // Update displayed gold
-        textOutput.innerHTML = `<p>You purchased a ${item} for ${cost}g.</p>`;
-        console.log(`Purchased ${item} for ${cost}g. Remaining gold: ${gameState.playerGold}`);
-    } else {
-        // Player cannot afford the item
-        textOutput.innerHTML = `<p>You cannot afford the ${item}. You need ${cost}g, but you only have ${gameState.playerGold}g.</p>`;
-        console.log(`Cannot afford ${item}. Needed: ${cost}g, Have: ${gameState.playerGold}g`);
-    }
-}
-// Close Shop
-function closeShop() {
-    gameState.isShopOpen = false;
-    textOutput.innerHTML = "<p id='shop-option'>Shop at this merchant.</p>";
-    document.getElementById("shop-option").addEventListener("click", openShop);
-    // Remove event listeners from shop items when closing the shop
-    const shopItems = document.querySelectorAll(".shop-item");
-    shopItems.forEach(item => {
-        item.removeEventListener("click", handleItemClick);
-    });
 }
 
 // Initialize the game
