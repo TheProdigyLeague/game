@@ -24,24 +24,40 @@ const mainMenuBackground = document.getElementById("main-menu-background");
 const mainMenuText = document.getElementById("main-menu-text");
 const mainMenuAudio = document.getElementById("main-menu-audio");
 
+let typedText = "";
 // Start Menu
 function showStartMenu() {
     gameContainer.style.display = "none"; // Hide the game scene
     mainMenuContainer.style.display = "block"; // Show the main menu
-    mainMenuText.innerHTML = `
-        <p>Welcome to the Adventure!</p>
-        <p class="menu-option" id="start-game-option"> > Start Game</p>
-        <p class="menu-option" id="exit-game-option"> > Exit Game</p>
-    `;
     // Add event listeners to menu options
-    document.getElementById("start-game-option").addEventListener("click", startGame);
-    document.getElementById("exit-game-option").addEventListener("click", exitGame);
 }
-
+// Listen for key presses on the entire document
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        const inputText = typedText.trim().toLowerCase();
+        if (inputText === 'start game') {
+            startGame(); // Start the game if "start game" was typed
+        } else {
+            // Show the prompt dialog
+            const dialogInput = prompt("Please type 'Start Game'");
+            if (dialogInput !== null && dialogInput.trim().toLowerCase() === 'start game') {
+                startGame(); // Start the game if "Start Game" was typed in the dialog
+            }
+        }
+        // Reset typed text after Enter
+        typedText = "";
+    } else if (event.key.length === 1) {
+        // Append typed characters to the string
+        typedText += event.key;
+    }
+});
 // Start Game
 function startGame() {
     gameState.currentScene = "gameplay";
-    mainMenuAudio.play(); // Play the main menu audio
+
+    mainMenuAudio.pause(); // Pause the main menu audio
+    mainMenuAudio.muted = false;
+    mainMenuAudio.play();
     loadAssets();
     console.log("Game started!");
     showGameScene();

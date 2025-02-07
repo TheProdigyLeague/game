@@ -58,30 +58,28 @@ body {
     border: 1px solid #ccc;
     text-align: center;
 }
+/* Existing styles for main menu */
 #main-menu-container {
-            position: relative; /* Important for layering */
-            width: 800px; /* Adjust as needed */
-            height: 825px; /* Adjust as needed */
-            margin: 20px auto;
-            text-align: center; /* Center the text */
-            display: block; /* Show the main menu initially */
-        }
+    position: fixed; /* Use fixed positioning */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh; /* Full viewport height */
+    overflow: hidden; /* Hide any overflow from the video */
+    z-index: 1; /* Ensure it's behind other elements */
+}
 
-        #main-menu-background {
-            width: 100%;
-            height: 100%;
-            object-fit: fill;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 0; /* Behind the text */
-        }
+#main-menu-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Cover the entire container */
+}
 
-        #main-menu-text {
-            position: relative;
-            z-index: 1; /* Above the background */
-            color: #eec9ae; /* Adjust text color as needed */
-            font-size: 24px; /* Adjust font size as needed */
-            font-family: "Courier New", monospace; /* Adjust font as needed */
-            padding-top: 100px; /* Adjust padding as needed */
-        }
+/* Hide the game container initially */
+#game-container {
+    display: none;
+    position: relative; /* Use relative positioning */
+    z-index: 2; /* Ensure it's on top of the video */
+}
+
+/* Existing styles for game elements */
