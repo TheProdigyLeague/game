@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Adventure Game</title>
+    <style>
+        body {
+            font-family: monospace;
+            background-color: #333;
+            color: #eee;
+            padding: 20px;
+        }
+        #game-output {
+            border: 1px solid #eee;
+            padding: 10px;
+            margin-bottom: 20px;
+            height: 300px;
+            overflow-y: scroll;
+        }
+        #game-input {
+            width: 100%;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+<h1>Text Adventure Game</h1>
+<div id="game-output"></div>
+<input type="text" id="game-input" placeholder="Enter your action...">
+<button onclick="processInput()">Submit</button>
+
+<script>
+    let currentRoom = "start";
+    let inventory = [];
+    let awaitingGoNorth = false; // Flag to indicate if we're waiting for "go north"
+    let awaitingNorthRoomChoice = false; // Flag to indicate if we're waiting for "go back" or "go north" in the north room
+    let northRoomEntered = false; // Flag to track if the north room has been entered
+    let awaitingStartRoomChoice = false; // Flag to indicate if we're waiting for "go back" or "go south" in the start room
+    let startRoomEntered = false; // Flag to track if the start room has been entered after getting the key
+    let reenteredNorthRoom = false; // Flag to track if the player has reentered the north room
+    const outputDiv = document.getElementById("game-output");
+    const inputField = document.getElementById("game-input");
+
+    function displayMessage(message) {
+        outputDiv.innerHTML += `<p>${message}</p>`;
+        outputDiv.scrollTop = outputDiv.scrollHeight; // Auto-scroll to bottom
+    }
+
+    function processInput() {
+        const playerInput = inputField.value.trim().toLowerCase();
+        inputField.value = ""; // Clear the input field
+        gameLoop(playerInput);
+    }
+
+    function gameLoop(playerInput) {
+        if (currentRoom === "start") {
+            if (!awaitingGoNorth && !awaitingStartRoomChoice) {
+                displayMessage("You wake up in a dark room. There's a door to the north.");
+                displayMessage("What do you do? (go north)");
+                awaitingGoNorth = true; // Set the flag to true
+                return; // Exit the function to wait for the next input
+            } else if (awaitingGoNorth) {
+                if (playerInput === "go north") {
+                    currentRoom = "northRoom";
+                    awaitingGoNorth = false; // Reset the flag
+                    gameLoop(""); // Proceed to the next room's logic
+                } else {
+                    displayMessage("You stumble around in the dark and fall into a pit. You died.");
+                    currentRoom = "end";
+                    displayMessage("Game Over.");
+                }
+            } else if (awaitingStartRoomChoice) {
+                displayMessage("You try to go back but there is no door. You can only go north.");
+                displayMessage("What do you do? (go back or go south)");
+                if (playerInput === "go south" || playerInput === "go back") {
+                    currentRoom = "northRoom";
+                    awaitingStartRoomChoice = false;
+                    startRoomEntered = false;
+                    gameLoop("");
+                } else {
+                    displayMessage("Invalid action. You can 'go back' or 'go south'.");
+                }
+                return;
+            }
+        } else if (currentRoom === "northRoom") {
+            if (!northRoomEntered) {
+                displayMessage("You enter a dimly lit room. A faint light shines from a crack in the wall. A dusty old chest sits in the corner.");
+                northRoomEntered = true;
+            } else if (reenteredNorthRoom) {
+                displayMessage("You reenter the dimly lit room. The light flickers from the crack in the wall.");
+                reenteredNorthRoom = false;
+            }
+            if (!awaitingNorthRoomChoice) {
+                if (playerInput === "examine chest") {
+                    displayMessage("You open the chest and find a rusty key.");
+                    inventory.push("rusty key");
+                    displayMessage("You now have a rusty key in your inventory.");
+                    displayMessage("What do you do? (go back or go north)");
+                    awaitingNorthRoomChoice = true;
+                    return;
+                } else if (playerInput === "examine crack") {
+                    displayMessage("You examine the crack. It's too small to fit through.");
+                    displayMessage("What do you do? (examine crack or go north)");
+                    return;
+                } else if (playerInput === "") {
+                    displayMessage("What do you do? (examine chest)");
+                    return;
+                } else {
+                    displayMessage("Invalid action. You can 'examine chest'.");
+                    return;
+                }
+            } else {
+                if (playerInput === "go back") {
+                    currentRoom = "start";
+                    awaitingNorthRoomChoice = false;
+                    northRoomEntered = false;
+                    awaitingStartRoomChoice = true;
+                    gameLoop("");
+                } else if (playerInput === "go north") {
+                    currentRoom = "lockedRoom";
+                    awaitingNorthRoomChoice = false;
+                    gameLoop("");
+                } else {
+                    displayMessage("Invalid action. You can 'go back' or 'go north'.");
+                }
+            }
+        } else if (currentRoom === "lockedRoom") {
+            if (inventory.includes("rusty key")) {
+                displayMessage("You use the key to unlock the door.");
+                displayMessage("You enter the final room. Congratulations!");
+                currentRoom = "end";
+            } else {
+                displayMessage("The door is locked. You need a key.");
+            }
+        } else if (currentRoom === "end") {
+            displayMessage("Game over.");
+        } else {
+            displayMessage("Invalid room.");
+        }
+    }
+
+    // Start the game
+    displayMessage("Welcome to the Text Adventure Game!");
+    gameLoop("");
+</script>
+</body>
+</html>
