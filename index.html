@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="manifest" href="manifest.json">
+    <title>Text Adventure</title>
+    <link rel="stylesheet" href="mainmenu.css">
+</head>
+<body>
+<div id="main-menu-container">
+    <video id="main-menu-video" autoplay muted loop>
+        <source src="assets/main_menu_video.mp4" type="video/mp4">
+        Your browser does not support the video element.
+    </video>
+</div>
+<div id="game-container" style="display: none;">
+    <img id="background" src="assets/background.img.png" alt="Background">
+    <img id="horizontal-plane" src="assets/horizontal.plane.png" alt="Horizontal Plane">
+    <img id="player" src="assets/character/player.png" alt="Player">
+    <img id="merchant" src="assets/merchant.png" alt="Merchant">
+    <img id="gold-display" src="assets/gold.coin.png" alt="Gold Display">
+</div>
+<div id="text-output"></div>
+<audio id="main-menu-audio" loop>
+    <source src="assets/main_menu_music.mp4" type="audio/mpeg">
+    Your browser does not support the audio element.
+</audio>
+<script src="txtadvent.js"></script>
+</body>
+</html>

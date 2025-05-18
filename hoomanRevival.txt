@@ -1,0 +1,38 @@
+~/AndroidStudioProjects/game$ git init
+## workflows
+
+## `index.html`: The main HTML file to display the game.
+   *   `style.css`: For basic styling (optional for now).
+   *   `script.js`: The main JavaScript file containing the game logic.
+   *   `assets/`: A folder to store your game assets.
+       *   `background.img.png`: Your hand-drawn background image.
+       *   `character/`: A subfolder for character assets.
+           *   `player.js`: (We'll use an image instead of a .js file for the character)
+           * `player.png`: Your hand-drawn character image.
+       *   `horizontal.plane.png`: Your hand-drawn horizontal plane image.
+
+# IDE: Android Studio
+# Platform: Android
+# Language: Kotlin (most likely)
+# AI Assistant: Gemini in Android Studio
+# Focus: Game development for Android
+# Experience: Beginner/Intermediate
+
+## Concept
+
+# Text Adventure: The core gameplay will be driven by text descriptions and player choices.
+# 2D Horizon: A single background image will represent the game world, with the player moving left or right along a horizontal plane.
+# Hand-Drawn Assets: The character, background, and horizontal plane will all be hand-drawn images.
+# Start Menu: A simple menu to start or exit the game.
+# Console-Based Loading: The game will load assets and display information in the browser's console (for now).
+# JavaScript: The entire game will be built using JavaScript.
+
+### CI/CD
+
+# Add more game elements (Merchant Sim).
+# Improve movement (Walk animation).
+# Mechanics: > Trade dialog box
+# Merchant image, dialog box image
+# Refactor struct for .gitignore
+# Debug when scripts break mainmenu game
+# Add merchant text
